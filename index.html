@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVDER — Digital Solutions</title>
+ <link rel="icon" href="assets/img/icono.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+<div class="scan-line"></div>
+
+<!-- CURSOR NODE -->
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- SCROLL RAIL 3D -->
+<div class="rail" id="rail">
+  <canvas id="railCanvas"></canvas>
+  <div class="rail__stops">
+    <span data-stop="hero">Inicio</span>
+    <span data-stop="servicios">Servicios</span>
+    <span data-stop="trabajo">Trabajo</span>
+    <span data-stop="proceso">Proceso</span>
+    <span data-stop="contacto">Contacto</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav__brand">
+    <span class="nav__mark">◇</span>
+    <span class="nav__name">AVDER</span>
+    <span class="nav__tag">| Digital Solutions</span>
+  </div>
+  <nav class="nav__links">
+    <button id="aboutOpenBtn"><span class="idx">00</span>Sobre nosotros</button>
+    <a href="#servicios"><span class="idx">01</span>Servicios</a>
+    <a href="#trabajo"><span class="idx">02</span>Trabajo</a>
+    <a href="#proceso"><span class="idx">03</span>Proceso</a>
+    <a href="#contacto"><span class="idx">04</span>Contacto</a>
+  </nav>
+  <a href="#contacto" class="nav__cta">Iniciar proyecto <span>→</span></a>
+  <button class="nav__burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+</header>
+
+<div class="mnav" id="mnav">
+  <button id="aboutOpenBtnMobile">Sobre nosotros</button>
+  <a href="#servicios">Servicios</a>
+  <a href="#trabajo">Trabajo</a>
+  <a href="#proceso">Proceso</a>
+  <a href="#contacto">Contacto</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero__content">
+    <div class="hero__eyebrow"><span class="dot-live"></span> SYSTEM.STATUS — DISPONIBLES PARA NUEVOS PROYECTOS</div>
+    <h1 class="hero__title">
+      Construimos la <span class="glitch" data-text="infraestructura">infraestructura</span><br>
+      digital de tu marca.
+    </h1>
+    <p class="hero__desc">
+      AVDER es un estudio tecnológico. Desarrollo web, software y apps, diseño gráfico &amp; branding,
+      y gestión de comunidades — todo bajo una misma arquitectura de producto.
+    </p>
+    <div class="hero__actions">
+      <a href="#servicios" class="btn btn--primary">Ver servicios <span>↓</span></a>
+      <a href="#trabajo" class="btn btn--ghost">Ver trabajo realizado</a>
+    </div>
+    <div class="hero__stats">
+      <div class="stat"><span class="stat__num" data-count="120">0</span><span class="stat__label">Proyectos entregados</span></div>
+      <div class="stat"><span class="stat__num" data-count="4">0</span><span class="stat__label">Líneas de servicio</span></div>
+      <div class="stat"><span class="stat__num" data-count="99">0</span><span class="stat__label">% Uptime en soporte</span></div>
+    </div>
+  </div>
+  <div class="hero__scroll">scroll <span></span></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee__track">
+    <span>DESARROLLO WEB</span><span>·</span><span>SOFTWARE &amp; APPS</span><span>·</span>
+    <span>DISEÑO GRÁFICO</span><span>·</span><span>BRANDING</span><span>·</span>
+    <span>COMMUNITY MANAGEMENT</span><span>·</span>
+    <span>DESARROLLO WEB</span><span>·</span><span>SOFTWARE &amp; APPS</span><span>·</span>
+    <span>DISEÑO GRÁFICO</span><span>·</span><span>BRANDING</span><span>·</span>
+    <span>COMMUNITY MANAGEMENT</span><span>·</span>
+  </div>
+</div>
+
+<!-- SERVICIOS -->
+<section class="services" id="servicios">
+  <div class="section__head">
+    <span class="section__eyebrow">// 01 — Servicios</span>
+    <h2 class="section__title">Un stack completo de servicios</h2>
+    <p class="section__desc">Selecciona un módulo para inspeccionar el trabajo realizado en esa línea de servicio.</p>
+  </div>
+
+  <div class="services__grid" id="servicesGrid">
+    <button class="service-card" data-service="web">
+      <div class="service-card__scene" data-scene="web"><canvas></canvas></div>
+      <div class="service-card__body">
+        <span class="service-card__idx">SRV_01</span>
+        <h3>Desarrollo Web</h3>
+        <p>Sitios y plataformas rápidas, escalables y a medida. De landing pages a e-commerce complejos.</p>
+        <span class="service-card__link">Ver casos <span>→</span></span>
+      </div>
+    </button>
+
+    <button class="service-card" data-service="software">
+      <div class="service-card__scene" data-scene="software"><canvas></canvas></div>
+      <div class="service-card__body">
+        <span class="service-card__idx">SRV_02</span>
+        <h3>Software &amp; Apps</h3>
+        <p>Aplicaciones web, móviles y sistemas internos. Arquitectura sólida pensada para crecer.</p>
+        <span class="service-card__link">Ver casos <span>→</span></span>
+      </div>
+    </button>
+
+    <button class="service-card" data-service="diseno">
+      <div class="service-card__scene" data-scene="diseno"><canvas></canvas></div>
+      <div class="service-card__body">
+        <span class="service-card__idx">SRV_03</span>
+        <h3>Diseño Gráfico &amp; Branding</h3>
+        <p>Identidad visual, sistemas de marca, logotipos y piezas gráficas con criterio estratégico.</p>
+        <span class="service-card__link">Ver casos <span>→</span></span>
+      </div>
+    </button>
+
+    <button class="service-card" data-service="community">
+      <div class="service-card__scene" data-scene="community"><canvas></canvas></div>
+      <div class="service-card__body">
+        <span class="service-card__idx">SRV_04</span>
+        <h3>Community Manager</h3>
+        <p>Estrategia de contenido, gestión de redes y comunidad. Crecimiento medible, no vanidad.</p>
+        <span class="service-card__link">Ver casos <span>→</span></span>
+      </div>
+    </button>
+  </div>
+</section>
+
+<!-- PANEL DE TRABAJO (CASOS REDISEÑADOS CON BLOQUE LIMPIO) -->
+<section class="work-panel" id="trabajo">
+  <div class="work-panel__inner" id="workPanelInner">
+    <div class="work-panel__tabs" id="workTabs">
+      <button class="wtab active" data-tab="web">01 · Desarrollo Web</button>
+      <button class="wtab" data-tab="software">02 · Software &amp; Apps</button>
+      <button class="wtab" data-tab="diseno">03 · Diseño &amp; Branding</button>
+      <button class="wtab" data-tab="community">04 · Community</button>
+    </div>
+
+    <div class="work-panel__content">
+      <!-- 01. WEB -->
+      <div class="wpanel active" data-panel="web">
+        <div class="wpanel__head">
+          <h3>Desarrollo Web</h3>
+          <p>Proyectos recientes de desarrollo de sitios y plataformas.</p>
+        </div>
+        <div class="wpanel__grid">
+          <button class="case" data-case="web1">
+            <div class="case__thumb thumb--web1">
+              <span class="case__tag">Landing Page</span>
+              <span class="case__play">▶</span>
+            </div>
+            <div class="case__content-box">
+              <h4>Plataforma corporativa — Innovax Ingenieros</h4>
+              <p>Diseño completo con CMS headless, tiempos de carga bajo 1s y panel de contenido a medida.</p>
+            </div>
+          </button>
+          <button class="case" data-case="web2">
+            <div class="case__thumb thumb--web2">
+              <span class="case__tag">E-commerce · Shopify Custom</span>
+              <span class="case__play">▶</span>
+            </div>
+            <div class="case__content-box">
+              <h4>Tienda en línea — Nova Studio</h4>
+              <p>Checkout optimizado y aumento del 38% en conversión tras el relanzamiento.</p>
+            </div>
+          </button>
+          <button class="case" data-case="web3">
+            <div class="case__thumb thumb--web3">
+              <span class="case__tag">Landing · Alto rendimiento</span>
+              <span class="case__play">▶</span>
+            </div>
+            <div class="case__content-box">
+              <h4>Landing de producto — Vértice SaaS</h4>
+              <p>Página de conversión con animaciones ligeras y puntuación 98+ en Core Web Vitals.</p>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- 02. SOFTWARE -->
+      <div class="wpanel" data-panel="software">
+        <div class="wpanel__head">
+          <h3>Software &amp; Apps</h3>
+          <p>Sistemas y aplicaciones desarrolladas a medida.</p>
+        </div>
+        <div class="wpanel__grid">
+          <button class="case" data-case="sw1">
+            <div class="case__thumb thumb--sw1">
+              <span class="case__tag">App móvil · React Native</span>
+              <span class="case__play">▶</span>
+            </div>
+            <div class="case__content-box">
+              <h4>App de logística — FlotaX</h4>
+              <p>Seguimiento en tiempo real de flotas con rutas optimizadas y notificaciones push.</p>
+            </div>
+          </button>
+          <button class="case" data-case="sw2">
+            <div class="case__thumb thumb--sw2">
+              <span class="case__tag">Panel interno · SaaS</span>
+              <span class="case__play">▶</span>
+            </div>
+            <div class="case__content-box">
+              <h4>ERP a medida — Manufacturas del Sur</h4>
+              <p>Sistema interno de inventario y producción que reemplazó hojas de cálculo manuales.</p>
+            </div>
+          </button>
+          <button class="case" data-case="sw3">
+            <div class="case__thumb thumb--sw3">
+              <span class="case__tag">API · Microservicios</span>
+              <span class="case__play">▶</span>
+            </div>
+            <div class="case__content-box">
+              <h4>Integración de pagos — Pagolink</h4>
+              <p>Arquitectura de microservicios para procesar transacciones a alta disponibilidad.</p>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- 03. DISEÑO -->
+      <div class="wpanel" data-panel="diseno">
+        <div class="wpanel__head">
+          <h3>Diseño Gráfico &amp; Branding</h3>
+          <p>Identidad visual y sistemas de marca.</p>
+        </div>
+        <div class="wpanel__grid">
+          <button class="case" data-case="d1">
+            <div class="case__thumb thumb--d1">
+              <span class="case__tag">Identidad de marca</span>
+              <span class="case__play">▶</span>
+            </div>
+            <div class="case__content-box">
+              <h4>Rebranding — Café Meridiano</h4>
+              <p>Sistema de marca completo: logotipo, tipografía, paleta y aplicaciones físicas.</p>
+            </div>
+          </button>
+          <button class="case" data-case="d2">
+            <div class="case__thumb thumb--d2">
+              <span class="case__tag">Naming · Identidad</span>
+              <span class="case__play">▶</span>
+            </div>
+            <div class="case__content-box">
+              <h4>Marca desde cero — Runa Labs</h4>
+              <p>Nombre, narrativa de marca e identidad visual para startup de biotecnología.</p>
+            </div>
+          </button>
+          <button class="case" data-case="d3">
+            <div class="case__thumb thumb--d3">
+              <span class="case__tag">Piezas gráficas</span>
+              <span class="case__play">▶</span>
+            </div>
+            <div class="case__content-box">
+              <h4>Sistema editorial — Revista Órbita</h4>
+              <p>Sistema de maquetación y piezas gráficas para publicación digital mensual.</p>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- 04. COMMUNITY -->
+      <div class="wpanel" data-panel="community">
+        <div class="wpanel__head">
+          <h3>Community Manager</h3>
+          <p>Estrategia de contenido y gestión de comunidades.</p>
+        </div>
+        <div class="wpanel__grid">
+          <button class="case" data-case="c1">
+            <div class="case__thumb thumb--c1">
+              <span class="case__tag">Estrategia · Instagram/TikTok</span>
+              <span class="case__play">▶</span>
+            </div>
+            <div class="case__content-box">
+              <h4>Crecimiento orgánico — Studio Fit</h4>
+              <p>De 2K a 48K seguidores en 8 meses con calendario editorial y contenido nativo.</p>
+            </div>
+          </button>
+          <button class="case" data-case="c2">
+            <div class="case__thumb thumb--c2">
+              <span class="case__tag">Gestión de comunidad</span>
+              <span class="case__play">▶</span>
+            </div>
+            <div class="case__content-box">
+              <h4>Comunidad activa — Fintech Andina</h4>
+              <p>Moderación, soporte y contenido educativo con tasa de respuesta bajo 15 minutos.</p>
+            </div>
+          </button>
+          <button class="case" data-case="c3">
+            <div class="case__thumb thumb--c3">
+              <span class="case__tag">Campaña · Lanzamiento</span>
+              <span class="case__play">▶</span>
+            </div>
+            <div class="case__content-box">
+              <h4>Lanzamiento de producto — Kaia Beauty</h4>
+              <p>Campaña multicanal con creadores locales que agotó inventario en la primera semana.</p>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section class="process" id="proceso">
+  <canvas id="processCanvas" class="process__canvas"></canvas>
+  <div class="section__head">
+    <span class="section__eyebrow">// 02 — Metodología</span>
+    <h2 class="section__title">Cómo trabajamos</h2>
+  </div>
+  <div class="process__list">
+    <div class="process__item is-active">
+      <div class="process__line"><div class="process__line-fill"></div></div>
+      <span class="process__num">01</span>
+      <h4>Diagnóstico</h4>
+      <p>Entendemos tu producto, tu marca y tu usuario antes de escribir una sola línea de código.</p>
+    </div>
+    <div class="process__item">
+      <div class="process__line"><div class="process__line-fill"></div></div>
+      <span class="process__num">02</span>
+      <h4>Arquitectura</h4>
+      <p>Definimos stack, sistema de diseño y estructura técnica pensada para escalar.</p>
+    </div>
+    <div class="process__item">
+      <div class="process__line"><div class="process__line-fill"></div></div>
+      <span class="process__num">03</span>
+      <h4>Construcción</h4>
+      <p>Desarrollo iterativo con entregas visibles y feedback continuo en cada sprint.</p>
+    </div>
+    <div class="process__item">
+      <div class="process__line"><div class="process__line-fill"></div></div>
+      <span class="process__num">04</span>
+      <h4>Lanzamiento &amp; soporte</h4>
+      <p>Publicamos, medimos y acompañamos con soporte técnico y de contenido continuo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="contact" id="contacto">
+  <canvas id="contactCanvas"></canvas>
+  <div class="contact__inner">
+    <span class="section__eyebrow">// 03 — Contacto</span>
+    <h2 class="contact__title">¿Construimos tu próximo <span>sistema?</span></h2>
+    <p class="contact__desc">Cuéntanos qué necesitas. Respondemos en menos de 24 horas.</p>
+    <a href="mailto:hola@andre.studio" class="btn btn--primary btn--lg">hola@andre.studio <span>→</span></a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer__brand">
+    <span class="nav__mark">◇</span> AVDER
+  </div>
+  <p>© 2026 AVDER Studio. Todos los derechos reservados.</p>
+  <div class="footer__social">
+    <a href="#">Instagram</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">Behance</a>
+  </div>
+</footer>
+
+<!-- MODAL: SOBRE NOSOTROS -->
+<div class="modal" id="aboutModal">
+  <div class="modal__backdrop" id="aboutBackdrop"></div>
+  <div class="modal__panel modal__panel--about">
+    <button class="modal__close" id="aboutClose" aria-label="Cerrar">✕</button>
+    <div class="about-modal__media">
+      <div class="about-modal__scene" id="aboutSceneContainer">
+        <canvas id="aboutCanvas"></canvas>
+      </div>
+      <div class="modal__scanlines"></div>
+      <div class="about-modal__overlay-content">
+        <div class="about-terminal-tag"><span>●</span> LIVE_CORE_TELEMETRY</div>
+        <h4>[SYSTEM // 3D_NEURAL_NODE]</h4>
+        <p>Renderizado en tiempo real con WebGL. Interacción directa con el motor principal de AVDER.</p>
+      </div>
+    </div>
+    <div class="about-modal__info">
+      <div class="about-modal__header">
+        <span class="section__eyebrow">// CORE_SYSTEM — INTEL_PROFILE</span>
+        <h3>Sobre AVDER Studio</h3>
+      </div>
+      <div class="about-card-tech">
+        <div class="about-card-badge">[01] Identidad Central</div>
+        <h4>Ingeniería &amp; Vanguardia Digital</h4>
+        <p>Somos un estudio tecnológico integral enfocado en fusionar ingeniería de software avanzada, arquitectura web de alto rendimiento y diseño estratégico visual.</p>
+      </div>
+      <div class="about-card-tech">
+        <div class="about-card-badge">[02] Dirección Estratégica</div>
+        <p><strong>Misión:</strong> Empoderar marcas globales mediante infraestructura digital de punta.<br><br><strong>Visión:</strong> Ser el estudio referente internacional en arquitectura de producto digital.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: DETALLE DE PROYECTO -->
+<div class="modal" id="caseModal">
+  <div class="modal__backdrop" id="modalBackdrop"></div>
+  <div class="modal__panel">
+    <button class="modal__close" id="modalClose" aria-label="Cerrar">✕</button>
+    <div class="modal__media">
+      <div class="modal__browser">
+        <div class="modal__browser-bar">
+          <span class="modal__dot"></span><span class="modal__dot"></span><span class="modal__dot"></span>
+          <span class="modal__url" id="modalUrl">avder.studio/proyecto</span>
+          <span class="modal__rec">● VISTA PREVIA</span>
+        </div>
+        <div class="modal__screen" id="modalScreen">
+          <video id="modalVideo" autoplay muted loop playsinline></video>
+          <div class="modal__scanlines"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal__info">
+      <span class="modal__idx" id="modalIdx">CASE_01</span>
+      <h3 id="modalTitle">Título del proyecto</h3>
+      <p class="modal__desc" id="modalDesc">Descripción del proyecto.</p>
+      <div class="modal__meta">
+        <div><span>Cliente</span><strong id="modalClient">—</strong></div>
+        <div><span>Año</span><strong id="modalYear">—</strong></div>
+        <div><span>Stack</span><strong id="modalStack">—</strong></div>
+      </div>
+      <div class="modal__results" id="modalResults"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
