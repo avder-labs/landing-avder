@@ -399,39 +399,321 @@ button{ font-family: inherit; background: none; border: none; color: inherit; cu
 .thumb--c2   { background-image: url('https://images.unsplash.com/photo-1533750349077-cdcd106f36b2?q=80&w=800&auto=format&fit=crop'); }
 .thumb--c3   { background-image: url('https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?q=80&w=800&auto=format&fit=crop'); }
 
-/* ==========================================================================
-   PROCESS
-   ========================================================================== */
-.process{ padding: 40px var(--site-padding) 140px; position: relative; z-index: 2; overflow: hidden; }
-.process__canvas{ position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: .4; pointer-events: none; }
-.process .section__head, .process__list{ position: relative; z-index: 2; }
-.process__list{ 
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-top: 40px;
-}
-.process__item{
-  display: flex; flex-direction: column; align-items: flex-start; padding: 10px 0 0 0;
-  background: transparent; border: none; opacity: 0.4; transition: opacity 0.4s ease;
-}
-.process__item.is-active{ opacity: 1; }
-.process__line { width: 100%; height: 2px; background: rgba(255, 255, 255, 0.1); margin-bottom: 20px; position: relative; overflow: hidden; }
-.process__line-fill { width: 0%; height: 100%; background: var(--cyan); transition: width linear; }
-.process__item.is-active .process__line-fill { width: 100%; transition-duration: 4s; }
-.process__num{ font-family: var(--font-mono); color: var(--cyan); font-size: .85rem; margin-bottom: 12px; }
-.process__item h4{ font-family: var(--font-display); font-size: 1.15rem; margin-bottom: 8px; color: #fff; }
-.process__item p{ color: var(--muted); font-size: .9rem; line-height: 1.6; }
 
 /* ==========================================================================
-   CONTACT
+   PROCESS REFINED STYLES (CORRECTO)
    ========================================================================== */
-.contact{
-  position: relative; padding: 160px var(--site-padding); text-align: center;
-  border-top: 1px solid var(--line); overflow: hidden;
+.process {
+  padding: 60px var(--site-padding) 160px;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
 }
-#contactCanvas{ position: absolute; inset: 0; z-index: 0; opacity: .45; }
-.contact__inner{ position: relative; z-index: 2; max-width: 720px; margin: 0 auto; }
-.contact__title{ font-family: var(--font-display); font-weight: 600; font-size: clamp(2rem, 4.4vw, 3.4rem); line-height: 1.1; }
-.contact__title span{ color: var(--cyan); }
-.contact__desc{ color: var(--muted); margin: 22px 0 40px; font-size: 1.05rem; }
+
+.process__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.process .section__head, 
+.process__container {
+  position: relative;
+  z-index: 2;
+}
+
+.process__container {
+  margin-top: 50px;
+  position: relative;
+}
+
+/* Línea de tiempo superior con barra de carga progresiva */
+.process__timeline-bar {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  margin-bottom: 40px;
+  display: none; /* Se activa en escritorio */
+}
+
+.process__timeline-line {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+}
+
+/* La barra que se llena de forma progresiva y fluida */
+.process__timeline-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: #d4af37;
+  transition: width 3s linear;
+}
+
+/* La bolita brillante guiando la punta de la barra */
+.process__timeline-dot {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  background: #d4af37;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 0 12px #d4af37, 0 0 20px rgba(212, 175, 55, 0.6);
+}
+
+/* Grilla horizontal para distribuir los 4 pasos ordenadamente */
+.process__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+}
+
+/* Cuadros del proceso */
+.process__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  opacity: 0.3;
+  cursor: pointer;
+  transition: opacity 0.4s ease, transform 0.4s ease, background 0.4s ease, border-color 0.4s ease;
+}
+
+.process__item:hover {
+  opacity: 0.6;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.process__item.is-active {
+  opacity: 1;
+  background: rgba(212, 175, 55, 0.03);
+  border-color: rgba(212, 175, 55, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.process__num {
+  font-family: var(--font-mono);
+  color: #d4af37;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.process__content h4 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.process__content p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive desktop: activa la línea superior */
+@media (min-width: 992px) {
+  .process__timeline-bar {
+    display: block;
+  }
+}
+
+
+/* ==========================================================================
+   CONTACT SECTION STYLES
+   ========================================================================== */
+.contact {
+  position: relative;
+  padding: 160px var(--site-padding);
+  text-align: center;
+  border-top: 1px solid var(--line);
+  overflow: hidden;
+}
+
+#contactCanvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: .45;
+  pointer-events: none;
+}
+
+.contact__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.contact__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 4.4vw, 3.4rem);
+  line-height: 1.1;
+  color: #fff;
+}
+
+.contact__title span {
+  color: #e6bb77; /* Tonalidad dorada oficial del sitio */
+}
+
+.contact__desc {
+  color: var(--muted);
+  margin: 18px 0 35px;
+  font-size: 1.05rem;
+}
+
+/* Estilos del Formulario */
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.contact__field-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.contact__input,
+.contact__textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 14px 18px;
+  color: #fff;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.contact__input:focus,
+.contact__textarea:focus {
+  border-color: #e6bb77;
+  background: rgba(230, 187, 119, 0.02);
+  box-shadow: 0 0 15px rgba(230, 187, 119, 0.1);
+}
+
+.contact__input::placeholder,
+.contact__textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.contact__textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Contenedor de acciones (Botón enviar + Botón de WhatsApp camuflado) */
+.contact__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+/* Botón de teléfono camuflado (glassmorphism discreto con acento dorado) */
+.contact__phone-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: var(--muted);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.contact__phone-btn svg {
+  stroke: #e6bb77;
+  transition: transform 0.3s ease;
+}
+
+.contact__phone-btn:hover {
+  color: #fff;
+  border-color: rgba(230, 187, 119, 0.4);
+  background: rgba(230, 187, 119, 0.04);
+}
+
+.contact__phone-btn:hover svg {
+  transform: scale(1.1);
+}
+
+/* Adaptabilidad Responsiva para Móviles */
+@media (max-width: 650px) {
+  .contact__field-group {
+    grid-template-columns: 1fr;
+  }
+  .contact__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .contact__phone-btn {
+    justify-content: center;
+  }
+}
+
+/*------*/
+/* Estilos para el mensaje de éxito del formulario */
+.contact__success {
+  margin-top: 30px;
+  padding: 30px;
+  background: rgba(230, 187, 119, 0.03);
+  border: 1px solid rgba(230, 187, 119, 0.2);
+  border-radius: 8px;
+  text-align: center;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.contact__success svg {
+  margin-bottom: 12px;
+}
+
+.contact__success h3 {
+  font-family: var(--font-display);
+  color: #fff;
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}
+
+.contact__success p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 /* ==========================================================================
    FOOTER

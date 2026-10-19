@@ -158,10 +158,7 @@ serviceScenes.forEach(container => {
   const matParams = { color: 0xe6bb77, wireframe: true, transparent: true, opacity: 0.9 };
 
   if (sceneType === 'web') {
-    // 1. Desarrollo Web: Terminal horizontal equilibrada + Nombre en binario grande y legible
     const group = new THREE.Group();
-    
-    // Marco de terminal horizontal proporcionado
     const frame = new THREE.Mesh(
       new THREE.BoxGeometry(3.0, 1.4, 0.1), 
       new THREE.MeshBasicMaterial({ color: 0xe6bb77, wireframe: true, transparent: true, opacity: 0.5 })
@@ -170,12 +167,12 @@ serviceScenes.forEach(container => {
 
     function createBinarySprite(message) {
       const canvas = document.createElement('canvas');
-      canvas.width = 512;   // Mayor resolución para que no se vea borroso ni chico
+      canvas.width = 512;
       canvas.height = 128;
       const ctx = canvas.getContext('2d');
       ctx.fillStyle = 'transparent';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.font = 'bold 36px monospace'; // Letra más grande
+      ctx.font = 'bold 36px monospace';
       ctx.fillStyle = '#e6bb77';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -186,16 +183,15 @@ serviceScenes.forEach(container => {
       return new THREE.Sprite(spriteMaterial);
     }
 
-    // "Andrea Alva Chavez" en binario distribuidos alrededor
     const binaryName = [
-      "01000001 01101110", // An
-      "01100100 01110010", // dr
-      "01100101 01101111", // ea
-      "01000001 01101100", // Al
-      "01110110 01100001", // va
-      "01000011 01101000", // Ch
-      "01100001 01110110", // av
-      "01100101 01111010"  // ez
+      "01000001 01101110",
+      "01100100 01110010",
+      "01100101 01101111",
+      "01000001 01101100",
+      "01110110 01100001",
+      "01000011 01101000",
+      "01100001 01110110",
+      "01100101 01111010"
     ];
 
     for (let i = 0; i < binaryName.length; i++) {
@@ -205,19 +201,16 @@ serviceScenes.forEach(container => {
         (Math.random() - 0.5) * 2.0,
         (Math.random() - 0.5) * 1.2 + 0.2
       );
-      // Escala ampliada para que tengan buen tamaño visual
       sprite.scale.set(1.8, 0.45, 1);
       group.add(sprite);
     }
     subject = group;
 
   } else if (sceneType === 'software') {
-    // 2. Software & Apps: Cubo de datos
     const geometry = new THREE.BoxGeometry(1.8, 1.8, 1.8);
     subject = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial(matParams));
 
   } else if (sceneType === 'diseno') {
-    // 3. Diseño Gráfico & Branding: Estilete / Lápiz 3D
     const group = new THREE.Group();
     const body = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 2.4, 8), new THREE.MeshBasicMaterial(matParams));
     body.rotation.z = Math.PI / 4;
@@ -231,7 +224,6 @@ serviceScenes.forEach(container => {
     subject = group;
 
   } else if (sceneType === 'community') {
-    // 4. Community Manager: Red de nodos de usuarios
     const group = new THREE.Group();
     const nodeGeo = new THREE.SphereGeometry(0.15, 8, 8);
     const nodeMat = new THREE.MeshBasicMaterial({ color: 0xe6bb77 });
@@ -263,7 +255,6 @@ serviceScenes.forEach(container => {
 
   if (subject) scene.add(subject);
 
-  // Animación interactiva con el mouse
   let mouseX = 0, mouseY = 0;
   container.addEventListener('mousemove', (e) => {
     const rect = container.getBoundingClientRect();
@@ -400,37 +391,108 @@ serviceScenes.forEach(container => {
 })();
 
 /* ==========================================================================
-   PROCESO AUTOMÁTICO
+   PROCESO AUTOMÁTICO (BARRA DE CARGA PROGRESIVA Y AVANCE DE CUADROS)
    ========================================================================== */
 document.addEventListener("DOMContentLoaded", () => {
   const processItems = document.querySelectorAll('.process__item');
+  const processProgress = document.getElementById('processProgress');
   if (processItems.length === 0) return;
 
   let currentIndex = 0;
-  const intervalTime = 4000;
-  let processTimer = null;
+  const intervalTime = 3000; // 3 segundos por cada paso
+  let processInterval = null;
 
-  function runProcessStep() {
-    processItems.forEach(item => {
-      item.classList.remove('is-active');
-      const fill = item.querySelector('.process__line-fill');
-      if (fill) fill.style.transitionDuration = '0s';
+  function updateProcess(index) {
+    // 1. Activar o desactivar las tarjetas visualmente
+    processItems.forEach((item, idx) => {
+      if (idx === index) {
+        item.classList.add('is-active');
+      } else {
+        item.classList.remove('is-active');
+      }
     });
 
-    const activeItem = processItems[currentIndex];
-    activeItem.classList.add('is-active');
-    
-    const activeFill = activeItem.querySelector('.process__line-fill');
-    if (activeFill) {
-      setTimeout(() => {
-        activeFill.style.transitionDuration = `${intervalTime / 1000}s`;
-      }, 50);
+    // 2. Hacer que la línea avance progresivamente tramo por tramo (25% -> 50% -> 75% -> 100%)
+    if (processProgress) {
+      const percentage = ((index + 1) / processItems.length) * 100;
+      processProgress.style.width = `${percentage}%`;
     }
-    currentIndex = (currentIndex + 1) % processItems.length;
   }
 
-  runProcessStep();
-  processTimer = setInterval(runProcessStep, intervalTime);
+  function nextStep() {
+    currentIndex = (currentIndex + 1) % processItems.length;
+    updateProcess(currentIndex);
+  }
+
+  function startProcess() {
+    processInterval = setInterval(nextStep, intervalTime);
+  }
+
+  function resetProcessTimer() {
+    clearInterval(processInterval);
+    startProcess();
+  }
+
+  // Permitir interacción haciendo clic manual en cualquier tarjeta de paso
+  processItems.forEach((item, idx) => {
+    item.addEventListener('click', () => {
+      currentIndex = idx;
+      updateProcess(currentIndex);
+      resetProcessTimer();
+    });
+  });
+
+  // Inicializar estado de arranque
+  updateProcess(currentIndex);
+  startProcess();
+});
+
+/* ==========================================================================
+   FORMULARIO DE CONTACTO (ENVÍO ASÍNCRONO BLINDADO)
+   ========================================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("contactForm");
+  const successBox = document.getElementById("formSuccess");
+  const submitBtn = document.getElementById("submitBtn");
+
+  if (!form) {
+    console.warn("No se encontró el formulario con id 'contactForm'");
+    return;
+  }
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault(); // Detiene por completo el comportamiento predeterminado
+    e.stopImmediatePropagation();
+
+    const originalBtnText = submitBtn.innerHTML;
+    submitBtn.innerHTML = "Enviando... <span>⏳</span>";
+    submitBtn.disabled = true;
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: { 
+          'Accept': 'application/json' 
+        }
+      });
+
+      if (response.ok) {
+        form.style.display = "none";
+        if (successBox) successBox.style.display = "block";
+      } else {
+        alert("Hubo un problema al enviar el mensaje. Inténtalo de nuevo.");
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+      }
+    } catch (error) {
+      alert("Error de red. Verifica tu conexión.");
+      submitBtn.innerHTML = originalBtnText;
+      submitBtn.disabled = false;
+    }
+  });
 });
 
 /* ==========================================================================
@@ -501,7 +563,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const aboutModal = document.getElementById('aboutModal');
     if (aboutModal && aboutModal.classList.contains('open')) {
       t += 0.015;
-      // Oscilación suave con Math.sin para evitar que de vueltas completas y se mantenga legible
       const targetRotationY = Math.sin(t) * 0.5 + (mx * 0.6);
       const targetRotationX = Math.cos(t * 0.7) * 0.2 + (my * 0.6);
 
